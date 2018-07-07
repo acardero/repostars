@@ -35,10 +35,13 @@ router.get("/", ensureAuthenticated, (req, res) => {
   
     me = gh.getUser();
     me.listRepos((err, privateRepos) => {
-      res.render("repositories/index", {
-        user: req.user,
-        privateRepos
-      });
+        Repo.find({}, (err, publishedRepos) => {
+            res.render("repositories/index", {
+                user: req.user,
+                privateRepos,
+                publishedRepos,
+            });
+        });
     });
 });
 
